@@ -1,0 +1,26 @@
+read package .json file and think aboubt
+ how to start 
+ dir 
+ npm run start
+ npm rum build--->create a anothre folder 
+
+
+ /// 
+ npm create vite@latest 
+ npm i   
+ ----> to run vite project
+ 
+ npm run dev
+
+--->
+naming should be in capital for vite
+and create react --as we are getting error in the both
+but it can be a .js and .jsx if it returns html then use jsx or any one 
+this is complusary in the vite and if both html and components are there
+then should be return in a dive 
+
+-------------------------------
+virtual dom--
+ react creates dom like structure
+ https://github.com/acdlite/react-fiber-architecture
+ 
