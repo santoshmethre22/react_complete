@@ -24,3 +24,20 @@ virtual dom--
  react creates dom like structure
  https://github.com/acdlite/react-fiber-architecture
  
+
+ read about 
+ usestate
+ usecallback
+ useeffect
+
+ creating our own hooks ----->
+
+
+ ----> 
+
+ 
+ 
+
+
+
+ 
