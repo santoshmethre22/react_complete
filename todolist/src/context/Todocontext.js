@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import  { createContext, useContext } from "react";
 
 export const TodoContext=createContext({
 
@@ -9,8 +9,13 @@ export const TodoContext=createContext({
             completd:false
         },
 
-        
-    ]
+
+    ],
+    addtodo:(todo)=>{},
+    updatetodo:(id,todo)=>{},
+    deletetodo:(id)=>{},
+    toggleComplete:(id)=>{}
+
 });
 
 export const useTodo=()=>{
