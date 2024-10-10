@@ -1,7 +1,8 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
-    todos: [{ id: 1, text: "" }]
+    // there is problem if u take todos:[{id:1,text:"hello world"}]
+    todos: [] // i have debugged it like this and tehre no ini state printing
 };
 
 export const todoslice = createSlice({
