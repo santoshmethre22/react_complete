@@ -1,59 +1,49 @@
-import Account, {Client,ID } from "appwrite";
-import conf from "../conf/conf";
+import conf from '../conf/conf.js';
+import { Client, Account, ID } from "appwrite";
+
 
 export class AuthService {
-  client = new Client()
-  account;
+    client = new Client();
+    account;
 
-  constructor() {
-    this.client
-      .setEndpoint(conf.appwriteUrl) // Set the Appwrite API Endpoint
-      .setProject(conf.appwriteProjectId); // Set the Appwrite Project ID
-
-    this.account = new Account(this.client); // Initialize Account service
-  }
-
-  // Method to create an account
-  async createAccount({ email, password, name }) {
-    try {
-      // Create a new user account
-      const userAccount = await this.account.create(
-        ID.unique(), // Ensure you call ID.unique() as a function
-        email,
-        password,
-        name // Passing the name to the account creation as a parameter
-      );
-
-      if (userAccount) {
-        return this.login({email,password}) // Return the account object if successful
-      } else {
-        return null; // Return null if the creation failed
-      }
-    } catch (error) {
-      console.error("Error creating account:", error);
-      throw error; // It's better to throw the error so it can be handled by the caller
-    }
-  }
-
-    async login ({email,password}){
-        try{
-            return await this.account.createSession(
-                email,password)
-        }
-        catch (error){
-            throw error;
-        }
-    } 
-    
-    async getCurrentUser(){
-        try {   
-
-            return await account.get();
+    constructor() {
+        this.client
+            .setEndpoint(conf.appwriteUrl)
+            .setProject(conf.appwriteProjectId);
+        this.account = new Account(this.client);
             
+    }
+
+    async createAccount({email, password, name}) {
+        try {
+            const userAccount = await this.account.create(ID.unique(), email, password, name);
+            if (userAccount) {
+                // call another method
+                return this.login({email, password});
+            } else {
+               return  userAccount;
+            }
         } catch (error) {
             throw error;
-            
         }
+    }
+
+    async login({email, password}) {
+        try {
+            return await this.account.createEmailPasswordSession(email, password);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getCurrentUser() {
+        try {
+            return await this.account.get();
+        } catch (error) {
+            console.log("Appwrite serive :: getCurrentUser :: error", error);
+        }
+
+        return null;
     }
 
     async logout() {
@@ -68,9 +58,4 @@ export class AuthService {
 
 const authService = new AuthService();
 
-export default authService;
-
-
-
-
-
+export default authService
