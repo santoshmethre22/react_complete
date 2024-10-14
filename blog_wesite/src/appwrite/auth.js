@@ -1,8 +1,8 @@
-import { Client, Account, ID } from "appwrite";
+import Account, {Client,ID } from "appwrite";
 import conf from "../conf/conf";
 
 export class AuthService {
-  client = new Client();
+  client = new Client()
   account;
 
   constructor() {
@@ -69,3 +69,8 @@ export class AuthService {
 const authService = new AuthService();
 
 export default authService;
+
+
+
+
+

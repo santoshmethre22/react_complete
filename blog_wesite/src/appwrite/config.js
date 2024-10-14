@@ -1,45 +1,41 @@
-import { Client, Databases, ID,Storage,Query } from "appwrite";
-import conf from "../conf/conf";
+import conf from '../conf/conf.js';
+import Storage, { Client, ID, Databases,Query } from "appwrite";
 
-export class dataService{
-
-     client = new Client()
-        database;
-        bucket;
-    constructor(){
-        this.client=new Client()
-        .setEndpoint(conf.appwriteUrl)
-        .setProject(conf.appwriteProjectId)
-        
-        this.database=new Databases(this.client);
-
-        this.bucket=new Storage(this.client);
+export class Service{
+    client = new Client();
+    databases;
+    bucket;
     
+    constructor(){
+        this.client
+        .setEndpoint(conf.appwriteUrl)
+        .setProject(conf.appwriteProjectId);
+        this.databases = new Databases(this.client);
+        this.bucket = new Storage(this.client);
     }
 
-    async creatPost({title,slug,conten,featureImage,status,userid})
-    {
+    async createPost({title, slug, content, featuredImage, status, userId}){
         try {
-            return await this.database.createDocument(
+            return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
                 {
                     title,
-                    conten,
-                    featureImage,
+                    content,
+                    featuredImage,
                     status,
-                    userid
+                    userId,
                 }
             )
         } catch (error) {
-            throw error;
+            console.log("Appwrite serive :: createPost :: error", error);
         }
     }
 
     async updatePost(slug, {title, content, featuredImage, status}){
         try {
-            return await this.database.updateDocument(
+            return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -56,10 +52,9 @@ export class dataService{
         }
     }
 
-
     async deletePost(slug){
         try {
-            await this.database.deleteDocument(
+            await this.databases.deleteDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
@@ -74,7 +69,7 @@ export class dataService{
 
     async getPost(slug){
         try {
-            return await this.database.getDocument(
+            return await this.databases.getDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug
@@ -88,7 +83,7 @@ export class dataService{
 
     async getPosts(queries = [Query.equal("status", "active")]){
         try {
-            return await this.database.listDocuments(
+            return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 queries,
@@ -137,5 +132,6 @@ export class dataService{
     }
 }
 
-const dataserve=new dataService();
-export default dataserve; 
+
+const service = new Service()
+export default service
